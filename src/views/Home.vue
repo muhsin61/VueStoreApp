@@ -1,7 +1,8 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div v-for="item in $store.state.showStorewItems" :key="item.id">
+      <HelloWorld :msg="['test']"  />
+    </div>
   </div>
 </template>
 
