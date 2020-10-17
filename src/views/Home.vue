@@ -8,7 +8,7 @@
 
 <script>
 // @ is an alias to /src
-import showProduct from '@/components/showProduct.vue'
+import showProduct from '@/components/ShowProduct.vue'
 
 export default {
   name: 'Home',
