@@ -6,7 +6,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     storeAllData: [],
-    showStorewItems: []
+    showStorewItems: [],
+    showProduct: true,
+    productInfo: Object
   },
   mutations: {
   },

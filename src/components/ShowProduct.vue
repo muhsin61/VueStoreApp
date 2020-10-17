@@ -1,16 +1,24 @@
 <template>
   <div class="hello">
-    {{msg[0]}}
+    <h5 @click="showProduct(msg)">
+      {{ msg.title }}
+    </h5>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: "ShowProduct",
   props: {
-    msg: Array
-  }
-}
+    msg: Object,
+  },
+  methods: {
+    showProduct(msg) {
+      this.$router.push(msg.title.replaceAll(" ", "-"));
+      console.log(msg);
+    },
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -28,5 +36,8 @@ li {
 }
 a {
   color: #42b983;
+}
+.hello {
+  cursor: pointer;
 }
 </style>
