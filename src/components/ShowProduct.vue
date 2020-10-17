@@ -1,8 +1,11 @@
 <template>
   <div class="hello">
-    <h5 @click="showProduct(msg)">
-      {{ msg.title }}
-    </h5>
+    <img :src="msg.image" @click="showProduct(msg)" >
+    <div>
+      <h3 @click="showProduct(msg)">{{ msg.title }}</h3>
+      <p @click="showProduct(msg)">{{msg.description}}</p>
+      <h5>{{msg.price}} €</h5>
+    </div>
   </div>
 </template>
 
@@ -23,21 +26,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+.hello{
+  display: flex;
+  border-bottom: 2px tomato solid;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-.hello {
+img,h3,p{
   cursor: pointer;
+}
+img{
+  position: relative;
+  width: 200px;
+  height: auto;
 }
 </style>

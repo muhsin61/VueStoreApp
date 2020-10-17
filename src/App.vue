@@ -1,20 +1,27 @@
 <template>
   <div id="app">
-    <div class="topbar"><h1>Fake Store card</h1></div>
-    <div class="sidebar"><h1>This is sidebar</h1></div>
+    <div class="topbar">
+      <h1>Fake Store card</h1>
+      <router-link to="/">Home</router-link> |
+      <router-link to="/card">Card</router-link>
+    </div>
+    <div class="sidebar">
+      <h1>This is sidebar</h1></div>
     <div v-if="$store.state.showProduct">
-      <div id="nav">
-        <router-link to="/">Home</router-link> |
-        <router-link to="/card">Card</router-link> |
-        <router-link to="/about">About</router-link>
-      </div>
     </div>
     <div v-else>
       <h1>{{ $store.state.productInfo.title }}</h1>
       <img :src="$store.state.productInfo.image" />
+      <div>
+        <h3>{{ $store.state.productInfo.title }}</h3>
+        <p>{{$store.state.productInfo.description}}</p>
+        <h5>{{$store.state.productInfo.price}} €</h5>
+      </div>
     </div>
-
     <router-view />
+      <div id="nav">
+        <router-link to="/about">About</router-link>
+      </div>
   </div>
 </template>
 <script>
