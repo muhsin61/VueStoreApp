@@ -7,6 +7,15 @@
     </div>
     <div class="sidebar">
       <h1>This is sidebar</h1>
+      <div v-for="check in $store.state.categoryList" :key="check">
+        <input
+          type="checkbox"
+          :checked="$store.state.searchCategoryList[check.replaceAll(' ','')]"
+          name="test"
+          :id="check"
+          @change="categoryChange($event)"
+        /><label :for="check">{{ check }}</label>
+      </div>
     </div>
     <div v-if="$store.state.showProduct"></div>
     <div v-else>
@@ -34,19 +43,31 @@ export default {
         this.$store.commit("pages");
         this.getRoute();
       });
+
+    this.$store.state.storeAllData.forEach((item) => {
+      if (
+        this.$store.state.categoryList.findIndex(
+          (category) => category === item.category
+        ) === -1
+      ) {
+        this.$store.state.categoryList.push(item.category);
+        this.$store.state.searchCategoryList[item.category.replaceAll(" ", "")] = false;
+      }
+    });
+    console.log(this.$store.state.searchCategoryList)
     if (JSON.parse(localStorage.getItem("cart")).length) {
       this.$store.state.cartProduct = JSON.parse(localStorage.getItem("cart"));
       this.$store.commit("calculate");
     }
     if (this.$route.path == "/" && !this.$route.query.page) {
-      this.$router.push("/?page=1");
+      this.$router.push({ path: "/", query: { page: "1", category: "test" } });
     }
     if (this.$route.query.page) {
       if (parseInt(this.$route.query.page) > 0) {
         this.$store.state.pageNumber = parseInt(this.$route.query.page) - 1;
         this.$store.commit("pages");
       } else {
-        this.$router.push("/?page=1");
+        this.$router.push({ path: "/", query: { page: "1" } });
       }
     }
   },
@@ -54,7 +75,7 @@ export default {
     $route() {
       console.log(this.$route);
       if (this.$route.path == "/" && !this.$route.query.page) {
-        this.$router.push("/?page=1");
+        this.$router.push({ path: "/", query: { page: "1" } });
       }
       if (this.$route.query.page) {
         this.$store.state.pageNumber = parseInt(this.$route.query.page) - 1;
@@ -79,6 +100,20 @@ export default {
         this.$store.state.showProduct = true;
       }
     },
+    categoryChange(e) {
+      console.log(e.target.id.replaceAll(' ',''));
+      this.$store.state.searchCategoryList[e.target.id.replaceAll(' ','')] = !this.$store.state.searchCategoryList[e.target.id.replaceAll(' ','')]
+      console.log(this.$store.state.searchCategoryList)
+      let showRouteCategory = ""
+      Object.keys(this.$store.state.searchCategoryList).forEach(item=>{
+        if(this.$store.state.searchCategoryList[item]){
+          showRouteCategory == "" ?  showRouteCategory += item : showRouteCategory += "-" + item
+        }
+      })
+      console.log(showRouteCategory)
+      this.$router.push({path: "/", query:{page:this.$route.query.page, category:showRouteCategory}})
+      console.log(this.$route.query)
+    },
   },
 };
 </script>
@@ -88,7 +123,6 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 
@@ -103,5 +137,11 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+.sidebar {
+  float: left;
+  height: 100vh;
+  width: 200px;
+  background: #42b983;
 }
 </style>

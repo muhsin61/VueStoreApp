@@ -12,7 +12,10 @@ export default new Vuex.Store({
     cartPrice: 0,
     cartNumber: 0,
     pageNumber: 0,
-    showedProduct: []
+    showedProduct: [],
+    categoryList:[],
+    searchCategoryList:{},
+    routerQuery: []
   },
   mutations: {
     calculate(state) {
