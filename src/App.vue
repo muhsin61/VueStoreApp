@@ -27,28 +27,38 @@
 <script>
 export default {
   async created() {
-    if (this.$route.path == "/") {
-      this.$router.push("/?page=1");
-    }
     await fetch("https://fakestoreapi.com/products")
       .then((response) => response.json())
       .then(async (data) => {
         this.$store.state.storeAllData = data;
-        this.$store.state.showStorewItems = this.$store.state.storeAllData;
+        this.$store.commit("pages");
         this.getRoute();
       });
     if (JSON.parse(localStorage.getItem("cart")).length) {
       this.$store.state.cartProduct = JSON.parse(localStorage.getItem("cart"));
       this.$store.commit("calculate");
     }
+    if (this.$route.path == "/" && !this.$route.query.page) {
+      this.$router.push("/?page=1");
+    }
+    if (this.$route.query.page) {
+      if (parseInt(this.$route.query.page) > 0) {
+        this.$store.state.pageNumber = parseInt(this.$route.query.page) - 1;
+        this.$store.commit("pages");
+      } else {
+        this.$router.push("/?page=1");
+      }
+    }
   },
   watch: {
     $route() {
+      console.log(this.$route);
       if (this.$route.path == "/" && !this.$route.query.page) {
         this.$router.push("/?page=1");
       }
       if (this.$route.query.page) {
-        console.log(parseInt(this.$route.query.page));
+        this.$store.state.pageNumber = parseInt(this.$route.query.page) - 1;
+        this.$store.commit("pages");
       }
       this.getRoute();
     },
