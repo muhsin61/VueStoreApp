@@ -15,6 +15,7 @@ export default new Vuex.Store({
   },
   mutations: {
     calculate(state) {
+      localStorage.setItem("cart", JSON.stringify(state.cartProduct));
       state.cartPrice = 0;
       state.cartNumber = 0;
       state.cartProduct.forEach((item) => {
