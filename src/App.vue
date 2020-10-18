@@ -34,8 +34,10 @@ export default {
         this.$store.state.showStorewItems = this.$store.state.storeAllData;
         this.getRoute();
       });
-    this.$store.state.cartProduct = JSON.parse(localStorage.getItem("cart"));
-    this.$store.commit("calculate")
+      if(JSON.parse(localStorage.getItem('cart')).length){
+        this.$store.state.cartProduct = JSON.parse(localStorage.getItem('cart'));
+        this.$store.commit("calculate")
+      }
   },
   watch: {
     

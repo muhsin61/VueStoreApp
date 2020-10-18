@@ -18,8 +18,8 @@ export default new Vuex.Store({
       localStorage.setItem("cart", JSON.stringify(state.cartProduct));
       state.cartPrice = 0;
       state.cartNumber = 0;
-      if(state.cartProduct.length > 1){
-          state.cartProduct.forEach((item) => {
+      if(state.cartProduct){
+        state.cartProduct.forEach((item) => {
           state.cartPrice += item.price * item.count;
           state.cartNumber += item.count;
         });
