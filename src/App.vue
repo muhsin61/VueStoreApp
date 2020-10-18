@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <div class="topbar">
-      <h1>Fake Store card</h1>
+      <h1>Fake Store Cart</h1>
       <router-link to="/">Home</router-link> |
-      <router-link to="/card">Card</router-link>
+      <router-link to="/cart">Cart</router-link>
     </div>
     <div class="sidebar">
       <h1>This is sidebar</h1></div>
