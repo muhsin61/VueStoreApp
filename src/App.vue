@@ -53,7 +53,6 @@ export default {
         })
       ) {
         this.$store.state.showProduct = false;
-        console.log("test123");
       } else {
         this.$store.state.showProduct = true;
       }
