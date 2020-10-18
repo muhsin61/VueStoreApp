@@ -27,8 +27,6 @@
 <script>
 export default {
   async created() {
-    this.$store.state.cartProduct = JSON.parse(localStorage.getItem("cart"));
-    this.$store.commit("calculate")
     await fetch("https://fakestoreapi.com/products")
       .then((response) => response.json())
       .then(async (data) => {
@@ -36,6 +34,8 @@ export default {
         this.$store.state.showStorewItems = this.$store.state.storeAllData;
         this.getRoute();
       });
+    this.$store.state.cartProduct = JSON.parse(localStorage.getItem("cart"));
+    this.$store.commit("calculate")
   },
   watch: {
     
