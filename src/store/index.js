@@ -12,6 +12,7 @@ export default new Vuex.Store({
     cartProduct: [],
     cartPrice: 0,
     cartNumber: 0,
+    pageNumber: 1
   },
   mutations: {
     calculate(state) {
@@ -25,6 +26,9 @@ export default new Vuex.Store({
         });
       
       }
+    },
+    pages(state){
+      console.log(state.cartNumber)
     }
   },
   actions: {

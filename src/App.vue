@@ -6,27 +6,30 @@
       <router-link to="/cart">Cart</router-link>
     </div>
     <div class="sidebar">
-      <h1>This is sidebar</h1></div>
-    <div v-if="$store.state.showProduct">
+      <h1>This is sidebar</h1>
     </div>
+    <div v-if="$store.state.showProduct"></div>
     <div v-else>
       <h1>{{ $store.state.productInfo.title }}</h1>
       <img :src="$store.state.productInfo.image" />
       <div>
         <h3>{{ $store.state.productInfo.title }}</h3>
-        <p>{{$store.state.productInfo.description}}</p>
-        <h5>{{$store.state.productInfo.price}} €</h5>
+        <p>{{ $store.state.productInfo.description }}</p>
+        <h5>{{ $store.state.productInfo.price }} €</h5>
       </div>
     </div>
     <router-view />
-      <div id="nav">
-        <router-link to="/about">About</router-link>
-      </div>
+    <div id="nav">
+      <router-link to="/about">About</router-link>
+    </div>
   </div>
 </template>
 <script>
 export default {
   async created() {
+    if (this.$route.path == "/") {
+      this.$router.push("/?page=1");
+    }
     await fetch("https://fakestoreapi.com/products")
       .then((response) => response.json())
       .then(async (data) => {
@@ -34,14 +37,19 @@ export default {
         this.$store.state.showStorewItems = this.$store.state.storeAllData;
         this.getRoute();
       });
-      if(JSON.parse(localStorage.getItem('cart')).length){
-        this.$store.state.cartProduct = JSON.parse(localStorage.getItem('cart'));
-        this.$store.commit("calculate")
-      }
+    if (JSON.parse(localStorage.getItem("cart")).length) {
+      this.$store.state.cartProduct = JSON.parse(localStorage.getItem("cart"));
+      this.$store.commit("calculate");
+    }
   },
   watch: {
-    
     $route() {
+      if (this.$route.path == "/" && !this.$route.query.page) {
+        this.$router.push("/?page=1");
+      }
+      if (this.$route.query.page) {
+        console.log(parseInt(this.$route.query.page));
+      }
       this.getRoute();
     },
   },
