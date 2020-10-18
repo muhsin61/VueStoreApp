@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <div class="topbar">
-      <h1>Fake Store card</h1>
+      <h1>Fake Store Cart</h1>
       <router-link to="/">Home</router-link> |
-      <router-link to="/card">Card</router-link>
+      <router-link to="/cart">Cart</router-link>
     </div>
     <div class="sidebar">
       <h1>This is sidebar</h1></div>
@@ -27,7 +27,6 @@
 <script>
 export default {
   async created() {
-    console.log(this.$route.path);
     await fetch("https://fakestoreapi.com/products")
       .then((response) => response.json())
       .then(async (data) => {
@@ -35,8 +34,13 @@ export default {
         this.$store.state.showStorewItems = this.$store.state.storeAllData;
         this.getRoute();
       });
+      if(JSON.parse(localStorage.getItem('cart')).length){
+        this.$store.state.cartProduct = JSON.parse(localStorage.getItem('cart'));
+        this.$store.commit("calculate")
+      }
   },
   watch: {
+    
     $route() {
       this.getRoute();
     },
@@ -53,7 +57,6 @@ export default {
         })
       ) {
         this.$store.state.showProduct = false;
-        console.log("test123");
       } else {
         this.$store.state.showProduct = true;
       }
