@@ -69,7 +69,7 @@ export default {
         ] = false;
       }
     });
-    if (JSON.parse(localStorage.getItem("cart")).length) {
+    if (JSON.parse(localStorage.getItem("cart")).length > 0) {
       this.$store.state.cartProduct = JSON.parse(localStorage.getItem("cart"));
       this.$store.commit("calculate");
     }

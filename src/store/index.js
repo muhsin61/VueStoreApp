@@ -57,8 +57,9 @@ export default new Vuex.Store({
         })
       }
       if (state.selected != "recommen") {
+        console.log(state.selected)
         if (state.selected == "priceInc") { state.filtredData.sort((a, b) => a.price - b.price) }
-        if (state.selected == "priceDec") { state.filtredData.sort((a, b) => a.price + b.price) }
+        if (state.selected == "priceDec") { state.filtredData.sort((a, b) => b.price - a.price) }
         if (state.selected == "name") { state.filtredData.sort((a, b) => a.title - b.title) }
       }
       console.log(state.filtredData)
