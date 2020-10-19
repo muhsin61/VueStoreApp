@@ -6,12 +6,18 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     storeAllData: [],
-    showStorewItems: [],
     showProduct: true,
     productInfo: Object,
     cartProduct: [],
     cartPrice: 0,
     cartNumber: 0,
+    pageNumber: 0,
+    selected: "recommen",
+    searchInput: "",
+    showedProduct: [],
+    categoryList:[],
+    searchCategoryList:{},
+    routerQuery: []
   },
   mutations: {
     calculate(state) {
@@ -23,8 +29,11 @@ export default new Vuex.Store({
           state.cartPrice += item.price * item.count;
           state.cartNumber += item.count;
         });
-      
       }
+    },
+    pages(state){
+      state.showedProduct = state.storeAllData.slice(state.pageNumber * 5 , 5 + 5 * state.pageNumber)
+      console.log(state.showedProduct)
     }
   },
   actions: {
