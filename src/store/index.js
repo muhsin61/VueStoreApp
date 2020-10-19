@@ -51,7 +51,7 @@ export default new Vuex.Store({
         const willFilterData = state.filtredData
         state.filtredData = []
         willFilterData.forEach(item => {
-          if ((item.title).toLowerCase().search((state.searchInput).toLowerCase()) > 0 || (item.description).toLowerCase().search((state.searchInput).toLowerCase()) > 0) {
+          if ((item.title).toLowerCase().search((state.searchInput).toLowerCase()) > -1 || (item.description).toLowerCase().search((state.searchInput).toLowerCase()) > -1) {
             state.filtredData.push(item)
           }
         })

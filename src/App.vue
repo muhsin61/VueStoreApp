@@ -69,10 +69,14 @@ export default {
         ] = false;
       }
     });
-    if (JSON.parse(localStorage.getItem("cart")).length > 0) {
+    if(JSON.parse(localStorage.getItem("cart"))){
+      console.log("çalıştı")
+      if (JSON.parse(localStorage.getItem("cart")).length > 0) {
       this.$store.state.cartProduct = JSON.parse(localStorage.getItem("cart"));
       this.$store.commit("calculate");
     }
+    }
+    
     if (this.$route.path == "/" && !this.$route.query.page) {
       this.$router.push({ path: "/", query: { page: "1" } });
     }
