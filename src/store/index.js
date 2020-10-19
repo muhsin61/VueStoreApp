@@ -34,6 +34,9 @@ export default new Vuex.Store({
     pages(state){
       state.showedProduct = state.storeAllData.slice(state.pageNumber * 5 , 5 + 5 * state.pageNumber)
       console.log(state.showedProduct)
+    },
+    searchAndShow(state){
+      console.log(state.cartPrice)
     }
   },
   actions: {
