@@ -21,10 +21,10 @@
       <input
         @change="searchInput"
         v-model="$store.state.searchInput"
-        placeholder="edit me"
+        placeholder="search"
       />
       <select v-model="$store.state.selected">
-        <option value="recommen" :selected="true">Önerilen</option>
+        <option value="recommen">Önerilen</option>
         <option value="priceInc">Fiyat küçükten büyüğe</option>
         <option value="priceDec">Fiyat büyükten küçüğe</option>
         <option value="name">İsme göre</option>
@@ -69,12 +69,18 @@ export default {
         ] = false;
       }
     });
-    if (JSON.parse(localStorage.getItem("cart")).length) {
-      this.$store.state.cartProduct = JSON.parse(localStorage.getItem("cart"));
-      this.$store.commit("calculate");
+    if (JSON.parse(localStorage.getItem("cart"))) {
+      console.log("çalıştı");
+      if (JSON.parse(localStorage.getItem("cart")).length > 0) {
+        this.$store.state.cartProduct = JSON.parse(
+          localStorage.getItem("cart")
+        );
+        this.$store.commit("calculate");
+      }
     }
+
     if (this.$route.path == "/" && !this.$route.query.page) {
-      this.$router.push({ path: "/", query: { page: "1"} });
+      this.$router.push({ path: "/", query: { page: "1" } });
     }
     if (this.$route.query.page) {
       if (parseInt(this.$route.query.page) > 0) {
@@ -95,10 +101,13 @@ export default {
         this.$store.state.searchCategoryList[item] = true;
       });
     }
+    this.$store.commit("searchAndShow", { query: this.$route.query });
+    this.$store.commit("pages");
   },
   watch: {
     $route() {
-      console.log(this.$route);//düzenlenebilir
+      console.log(this.$route); //düzenlenebilir
+      this.$store.commit("searchAndShow", { query: this.$route.query });
       if (this.$route.path == "/" && !this.$route.query.page) {
         this.$router.push({ path: "/", query: { page: "1" } });
       }

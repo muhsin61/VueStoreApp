@@ -25,7 +25,7 @@ export default {
       if(pageNumber == "-" && this.$store.state.pageNumber > 0){
         this.$store.state.pageNumber--
       }
-      if(pageNumber == "+" && this.$store.state.pageNumber < 3){
+      if(pageNumber == "+" && this.$store.state.pageNumber < (this.$store.state.filtredData.length / 5 - 1)){
         this.$store.state.pageNumber++
       }
       this.$router.push("/?page=" + (this.$store.state.pageNumber + 1));
